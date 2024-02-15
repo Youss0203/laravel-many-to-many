@@ -19,9 +19,17 @@
                 <input class="form-control" type="text" name="nome" id="nome" value="{{ old('nome') }}">
             </div>
 
+
             <div class="mb-3 input-group">
-                <label for="name_project" class="input-group-text">Tipo:</label>
-                <input class="form-control" type="text" name="type_id" id="type_id" value="{{ old('type_id') }}">
+                <label for="type_id" class="input-group-text">Tipo:</label>
+                <select class="form-select" type="text" name="type_id" id="type_id" >
+                    @foreach ($types as $type)
+                        <option value="{{ $type->id }}"
+                            {{ $type->id == old('category_id', $project->type_id) ? 'selected' : '' }}>
+                                {{ $type->tipo }}
+                        </option>
+                    @endforeach
+                </select>
             </div>
 
             <div class="mb-3 input-group">
@@ -38,6 +46,19 @@
                 <label for="image" class="input-group-text">Linguaggi usati:</label>
                 <input class="form-control" type="text" name="linguaggi_usati" id="linguaggi_usati" value="{{ old('linguaggi_usati') }}">
             </div>
+            <div class="mb-3 input-group">
+                <div>
+                    @foreach ($technologies as $technologie )
+                        <input class="form-check-input" type="checkbox" name="technologies[]" id="technologies-{{ $technologie->id }}" value="{{ $technologie->id }}"
+                        {{ in_array( $technologie->id, old('technologies', $project->technologies->pluck('id')->toArray())) ? 'checked' : '' }}>
+                        <label for="technologies-{{ $technologie->id }}">
+                            {{ $technologie->tecnologia }}
+                        </label>
+                        
+                    @endforeach
+                </div>
+            </div>
+
 
             <div class="mb-3 input-group">
                 <label for="linguaggio_usato" class="input-group-text">Repo url:</label>
